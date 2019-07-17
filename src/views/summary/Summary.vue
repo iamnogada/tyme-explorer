@@ -24,10 +24,10 @@
 </template>
 
 <script>
-import TymePrice from './TymePrice.vue'
-import LatestBlock from './LatestBlock.vue'
-import TPS from './TPS.vue'
-import TransactionInfo from './TransactionInfo.vue'
+import TymePrice from '@/views/summary/TymePrice.vue'
+import LatestBlock from '@/views/summary/LatestBlock.vue'
+import TPS from '@/views/summary/TPS.vue'
+import TransactionInfo from '@/views/summary/TransactionInfo.vue'
 export default {
   components:{
     TymePrice,

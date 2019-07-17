@@ -5,7 +5,7 @@ import Buefy from 'buefy'
 
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/css/fontawesome.css'
-
+import util from './mixins/util'
 
 import routes from './routes'
 
@@ -18,6 +18,7 @@ Vue.use(Buefy, {
 })
 
 Vue.use(VueRouter)
+Vue.mixin(util)
 
 const router = new VueRouter({mode:'history',routes});
 
