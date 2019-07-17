@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-   hello
+    <img alt="Vue logo" src="./assets/logo.png">
+    <HelloWorld :msg="greeting"/>
+    <button class="button is-primary">This is a button !!</button>
   </div>
 </template>
 
