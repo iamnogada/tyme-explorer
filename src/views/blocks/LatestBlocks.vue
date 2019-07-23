@@ -7,13 +7,14 @@
     </thead>
     <tfoot>
       <tr>
-        <td colspan="3">
-          <a class="button is-primary is-fullwidth">view all blocks</a>
+        <td colspan="2">
+          <b-button @click="goBlocks" class="button is-primary is-fullwidth">view all blocks</b-button>
+
         </td>
       </tr>
     </tfoot>
     <tbody>
-      <tr v-for="item in blocks" :key="item.no">
+      <tr v-for="item in latestblocks" :key="item._id">
         <td style="width:86px">
           <p class="image is-48x48">
             <a href>
@@ -22,15 +23,14 @@
           </p>
         </td>
         <td class="has-text-left">
-          <a href class="button is-success is-small-mobile">#{{item.no}}</a>
-          <span class="tag is-small ">{{getDiffString(new Date(item.when),new Date())}}</span>
-        </td>
-        <td>
-          <span class="tag is-rounded is-small">transfer:0</span>
-          <span class="tag is-rounded is-small">create:0</span>
-          <span class="tag is-rounded is-small">update:0</span>
+          <a href class="button is-success is-small-mobile">#{{item._id}}</a>
+          <span class="tag is-small ">{{getDiffString(new Date(item.timestamp),new Date())}}</span>
+          <span class="tag is-rounded is-small">transfer:{{item.summary.transfer}}</span>
+          <span class="tag is-rounded is-small">create:{{item.summary.account_create}}</span>
+          <span class="tag is-rounded is-small" v-if="item.summary.account_update">update:{{item.summary.account_update}}</span>
         </td>
       </tr>
+      
     </tbody>
   </table>
 </template>
@@ -38,49 +38,29 @@
 
 <script>
 export default {
-  data() {
-    return {
-      blocks: [
-        {
-          no: 3000005,
-          when: "16 July 2019 07:45:00 GMT+00:00",
-          bp: "tymaker",
-          count: 2
-        },
-        {
-          no: 3000004,
-          when: "17 July 2019 08:45:00 GMT+00:00",
-          bp: "tymaker",
-          count: 2
-        },
-        {
-          no: 3000003,
-          when: "17 July 2019 07:45:00 GMT+00:00",
-          bp: "tymaker",
-          count: 2
-        },
-        {
-          no: 3000002,
-          when: "17 July 2019 07:45:00 GMT+00:00",
-          bp: "tymaker",
-          count: 2
-        },
-        {
-          no: 3000001,
-          when: "17 July 2019 07:45:00 GMT+00:00",
-          bp: "tymaker",
-          count: 2
-        }
-      ]
-    };
+  created(){
+    this.$store.dispatch('block/getBlockSummary')
   },
-  methods: {}
+  computed:{
+    latestblocks(){
+      return this.$store.state.block.latestblocks
+    }
+  },
+  methods: {
+    goBlocks(){
+      this.$router.push('blocks')
+    }
+  }
 };
 </script>
 
 <style lang="css" scoped>
 .table td {
   vertical-align: middle;
+}
+
+.table tbody tr {
+  height: 82px;
 }
 .tr-display .button {
   display: block;

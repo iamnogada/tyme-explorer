@@ -1,24 +1,29 @@
-const debug = require('debug')('e-template:server')
 const http = require('http')
 
 const express = require('express')
 const path = require('path')
+require('dotenv').config({'path':path.join(__dirname,'config/.env')})
 const cookieParser = require('cookie-parser')
-const logger = require('morgan')
+const morgan = require('morgan')
+const logger =require('./util/logger')
 
-const messageRouter = require('./routes/message')
 const defaultRouter = require('./routes/default')
+const monitorRouter = require('./routes/monitor')
+const apiRouter = require('./routes/api')
 
 const app = express()
 
-app.use(logger('dev'))
+app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'dist')))
 
-app.use('/message', messageRouter)
 app.use('/', defaultRouter)
+app.use('/api', apiRouter)
+app.use('/monitor', monitorRouter)
+
+
 
 /**
  * Get port from environment and store in Express.
@@ -92,5 +97,5 @@ function onListening() {
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port
-  debug('Listening on ' + bind)
+  logger.debug('Listening on ' + bind)
 }

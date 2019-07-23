@@ -10,7 +10,7 @@
         <hr />
       </div>
     </div>
-    <div class="columns">
+    <div class="columns is-hidden-mobile">
       <div class="column">
         <TPS />
         <hr />

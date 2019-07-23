@@ -7,8 +7,7 @@
     </figure>
     <div class="media-content">
       <p>
-        <small>TYM Price</small>
-        <small>at 11:10</small>
+        <small>TYM Price</small>&nbsp;
         <br />
         <strong>0.000000 BTC</strong>
       </p>

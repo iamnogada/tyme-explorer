@@ -2,13 +2,16 @@
   <table class="table is-striped is-fullwidth">
     <thead>
       <tr>
-        <th colspan="3">Transactions</th>
+        <th colspan="3">Latest Transactions</th>
       </tr>
     </thead>
     <tfoot>
       <tr>
         <td colspan="3">
-          <a class="button is-link is-fullwidth">view all transactions</a>
+          <b-button
+            @click="goTransactions"
+            class="button is-link is-fullwidth"
+          >view all transactions</b-button>
         </td>
       </tr>
     </tfoot>
@@ -23,20 +26,21 @@
         </td>
         <td colspan="2">
           <span class="tr-display">
-            <a href class="button is-info">#{{item.id}}</a>
+            <a href class="button is-info">#{{item._id}}</a>
           </span>
-          <div v-if="item.transfer != undefined">
+          {{item.operations[0][0]}}
+          <!-- <div v-if="item.transfer != undefined">
             <span class="tag is-rounded">{{item.transfer.amount}}</span>
-            <span class="tag is-rounded">{{getDiffString(new Date(item.when),new Date())}}</span>
+            <span class="tag is-rounded">{{getDiffString(new Date(item.timestamp),new Date())}}</span>
           </div>
           <p class="tags" v-if="item.create != undefined">
             <span class="tag is-rounded">create</span>
-            <span class="tag is-rounded brief">{{item.create.wallet}}</span>
+            <span class="tag is-rounded">{{getDiffString(new Date(item.timestamp),new Date())}}</span>
           </p>
-          <p class="tags " v-if="item.update != undefined">
+          <p class="tags" v-if="item.update != undefined">
             <span class="tag is-rounded">update</span>
-            <span class="tag is-rounded brief">{{item.update.wallet}}</span>
-          </p>
+            <span class="tag is-rounded">{{getDiffString(new Date(item.timestamp),new Date())}}</span>
+          </p> -->
         </td>
       </tr>
     </tbody>
@@ -45,55 +49,21 @@
 
 <script>
 export default {
+  created() {
+    this.$store.dispatch("transaction/getTransactionSummary");
+  },
+  methods: {
+    goTransactions() {
+      this.$router.push("transactions");
+    }
+  },
+  computed:{
+    latestTransactions(){
+      return this.$store.state.transaction.latestTransactions
+    }
+  },
   data() {
-    return {
-      transactions: [
-        {
-          no: 3000005,
-          id: "95cb0cf46c87d66a413e837e54951c653a0f39e8",
-          when: "16 July 2019 07:45:00 GMT+00:00",
-          transfer: {
-            amount: "1000.00000000 TYM",
-            from: "myguddy1234567890",
-            to: "seeeok"
-          }
-        },
-        {
-          no: 3000005,
-          id: "95cb0cf46c87d66a413e837e54951c653a0f39e1",
-          when: "16 July 2019 07:45:00 GMT+00:00",
-          transfer: {
-            amount: "1000.00000000 TYM",
-            from: "myguddy",
-            to: "seeeok"
-          }
-        },
-        {
-          no: 3000005,
-          id: "95cb0cf46c87d66a413e837e54951c653a0f39e2",
-          when: "16 July 2019 07:45:00 GMT+00:00",
-          create: {
-            wallet: "myguddy12345678901234567890"
-          }
-        },
-        {
-          no: 3000005,
-          id: "95cb0cf46c87d66a413e837e54951c653a0f39e3",
-          when: "16 July 2019 07:45:00 GMT+00:00",
-          update: {
-            wallet: "myguddy"
-          }
-        },
-        {
-          no: 3000005,
-          id: "95cb0cf46c87d66a413e837e54951c653a0f39e4",
-          when: "16 July 2019 07:45:00 GMT+00:00",
-          create: {
-            wallet: "seeeok"
-          }
-        }
-      ]
-    };
+    return {};
   }
 };
 </script>
@@ -103,18 +73,15 @@ export default {
   vertical-align: middle;
 }
 .table tbody tr {
-  height: 80px;
+  height: 82px;
 }
-@media only screen and (max-width: 800px) {
-  .tr-display .button {
-    display: block;
-    width: 12em;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+.tr-display .button {
+  display: block;
+  width: 12em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
-
 .brief {
   display: block;
   width: 12em;

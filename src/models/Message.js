@@ -11,7 +11,7 @@ export default {
       })
         .then(res => res.json())
         .then(json => json.msg)
-        .catch(err => { throw new Error(err) })
+        .catch((err) => { throw new Error(err) })
     }
     // for IE
     return new Promise((resolve, reject) => {

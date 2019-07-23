@@ -7,10 +7,9 @@
           </figure>
           <div class="media-content">
             <p>
-              <small>Latest Block</small>
-              <small>at 11:10</small>
+              <small>Latest Block</small>&nbsp;
               <br />
-              <strong>#3941932</strong>
+              <strong>#394100932</strong>
             </p>
           </div>
         </article>

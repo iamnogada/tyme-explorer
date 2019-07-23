@@ -10,7 +10,7 @@
           class="navbar-burger burger"
           aria-label="menu"
           aria-expanded="false"
-          data-target="navbarBasicExample"
+          data-target="mainmenu"
           :class="{'is-active':showNav}"
           @click="showNav = !showNav"
         >
@@ -20,29 +20,33 @@
         </a>
       </div>
 
-      <div id="navbarBasicExample" class="navbar-menu" :class="{'is-active':showNav}">
+      <div id="mainmenu" class="navbar-menu" :class="{'is-active':showNav}">
         <div class="navbar-start">
-          <a class="navbar-item">Home</a>
-          <a class="navbar-item" href="https://www.ecotyme.com" target="_blank">Wallet</a>
+          <a class="navbar-item" href="/#/">Home</a>
+          <!-- <a class="navbar-item" href="https://www.ecotyme.com" target="_blank">Wallet</a> -->
+          <a class="navbar-item" href="/#/blocks">Blocks</a>
+          <a class="navbar-item" href="/#/transactions">Transactions</a>
         </div>
 
         <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <a class="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a class="button is-light">Log in</a>
-            </div>
+          <div class="navbar-item is-expanded is-hidden-mobile">
+            <SearchBar/>
           </div>
         </div>
       </div>
     </nav>
+    <div class="container is-hidden-desktop searchbar">
+      <SearchBar />
+    </div>
   </div>
 </template>
 
 <script>
+import SearchBar from "@/views/SearchBar.vue";
 export default {
+  components: {
+    SearchBar
+  },
   data() {
     return {
       showNav: false
@@ -54,7 +58,14 @@ export default {
 </script>
 
 <style lang="css" scoped>
-@media all and (min-width: 1088px) {
+.searchbar {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+@media screen and (min-width: 1024px) {
+}
+/* @media all and (min-width: 1088px) {
   .navbar {
     margin: 1rem 0;
   }
@@ -66,5 +77,5 @@ export default {
   .logo img {
     max-height: 2.5rem;
   }
-}
+} */
 </style>
