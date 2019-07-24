@@ -17,9 +17,10 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+console.log("========:"+path.join(__dirname, 'dist'));
 app.use(express.static(path.join(__dirname, 'dist')))
 
-app.use('/', defaultRouter)
+// app.use('/', defaultRouter)
 app.use('/api', apiRouter)
 app.use('/monitor', monitorRouter)
 

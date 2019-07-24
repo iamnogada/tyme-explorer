@@ -4,7 +4,7 @@
   "main": "app.js",
   "scripts": {
     "frontend": "webpack --config ./node_modules/@vue/cli-service/webpack.config.js --watch",
-    "backend": "nodemon app.js",
+    "backend": "nodemon backend/app.js",
     "build": "vue-cli-service build",
     "start": "concurrently \"npm run frontend\" \"npm run backend\" "
   },

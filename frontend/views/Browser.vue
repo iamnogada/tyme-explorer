@@ -8,10 +8,10 @@
     </div>
     <div class="section mysection">
       <div class="columns is-desktop">
-        <div class="column">
+        <div class="column is-half-desktop">
           <LatestBlocks />
         </div>
-        <div class="column">
+        <div class="column is-half-desktop">
           <LatestTransactions />
         </div>
       </div>

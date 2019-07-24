@@ -1,5 +1,5 @@
 <template>
-  <table class="table is-striped is-fullwidth">
+  <table class="table is-striped  is-fullwidth">
     <thead>
       <tr>
         <th colspan="3">Latest Blocks</th>
@@ -23,12 +23,12 @@
           </p>
         </td>
         <td class="has-text-left">
-          <a href class="button is-success is-small-mobile">#{{item._id}}</a>
+          <span class="tr-display">
+            <a href class="button is-success">#{{item._id}}</a>
+          </span>
           <span class="tag is-small ">{{getDiffString(new Date(item.timestamp),new Date())}}</span>
-          <span class="tag is-rounded is-small">transfer:{{item.summary.transfer}}</span>
-          <span class="tag is-rounded is-small">create:{{item.summary.account_create}}</span>
-          <span class="tag is-rounded is-small" v-if="item.summary.account_update">update:{{item.summary.account_update}}</span>
-        </td>
+          <span class="tag is-rounded is-small">transactions:&nbsp;{{getTotal(item)}}</span>
+        </td> 
       </tr>
       
     </tbody>
@@ -49,6 +49,9 @@ export default {
   methods: {
     goBlocks(){
       this.$router.push('blocks')
+    },
+    getTotal(item){
+      return Number(item.summary.transfer)+Number(item.summary.account_create)+Number(item.summary.account_update ?item.summary.account_update:0)
     }
   }
 };
@@ -62,11 +65,17 @@ export default {
 .table tbody tr {
   height: 82px;
 }
+
 .tr-display .button {
   display: block;
-  width: 10em;
+  width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+@media only screen and (max-width: 768px) {
+  .tr-display .button {
+    width: 15em;
+  }
 }
 </style>

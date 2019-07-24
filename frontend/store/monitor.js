@@ -11,8 +11,7 @@ const actions = {
   startMonitor({dispatch}){
     dispatch('sam/Test',"hello",{root:true})
 
-    if (window.fetch) {
-      console.log('detect window')
+    if (!!window.EventSource) {
       const sseSource = new EventSource('/monitor')
       sseSource.addEventListener('message',(e)=>{
         const messageData = e.data;
@@ -24,6 +23,10 @@ const actions = {
         console.log('User login:' + e.data);
       }, false);
       
+    }else{
+      setTimeout(() => {
+        
+      }, 1500);
     }
   }
 }

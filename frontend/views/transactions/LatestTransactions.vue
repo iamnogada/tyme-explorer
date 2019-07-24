@@ -16,7 +16,7 @@
       </tr>
     </tfoot>
     <tbody>
-      <tr v-for="item in transactions" :key="item.id">
+      <tr v-for="item in latestTransactions" :key="item.id">
         <td style="width:86px">
           <p class="image is-48x48">
             <a href>
@@ -28,7 +28,10 @@
           <span class="tr-display">
             <a href class="button is-info">#{{item._id}}</a>
           </span>
-          {{item.operations[0][0]}}
+          <span class="tag is-rounded">{{getDiffString(new Date(item.timestamp),new Date())}}</span>
+          <span class="tag is-rounded">{{item.operations[0][0]}}</span>
+          
+          
           <!-- <div v-if="item.transfer != undefined">
             <span class="tag is-rounded">{{item.transfer.amount}}</span>
             <span class="tag is-rounded">{{getDiffString(new Date(item.timestamp),new Date())}}</span>
@@ -40,7 +43,7 @@
           <p class="tags" v-if="item.update != undefined">
             <span class="tag is-rounded">update</span>
             <span class="tag is-rounded">{{getDiffString(new Date(item.timestamp),new Date())}}</span>
-          </p> -->
+          </p>-->
         </td>
       </tr>
     </tbody>
@@ -57,9 +60,9 @@ export default {
       this.$router.push("transactions");
     }
   },
-  computed:{
-    latestTransactions(){
-      return this.$store.state.transaction.latestTransactions
+  computed: {
+    latestTransactions() {
+      return this.$store.state.transaction.latestTransactions;
     }
   },
   data() {
@@ -77,10 +80,15 @@ export default {
 }
 .tr-display .button {
   display: block;
-  width: 12em;
+  width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+@media only screen and (max-width: 768px) {
+  .tr-display .button {
+    width: 15em;
+  }
 }
 .brief {
   display: block;
