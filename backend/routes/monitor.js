@@ -2,7 +2,8 @@ var express = require('express')
 const path = require('path')
 const EventEmitter = require('events');
 var router = express.Router()
-const my = new EventEmitter()
+const WMainnetEvent = require('../service/WMainnetEvent')
+const logger = require('../util/logger')
 
 
 function sseDemo(req, res, id) {
@@ -17,25 +18,22 @@ function sseDemo(req, res, id) {
   //     messageId += 1;
   // }, 1000);
   res.callback = (data) => {
-    res.write(`id: ${id}\n`);
-    res.write(`event: userlogon\n`);
-    res.write(`data: ${data} -- ${Date.now()}\n\n`);
+    const timestamp = new Date()
+    res.write(`id: ${ timestamp.toUTCString()}\n`);
+    res.write(`event: mainnet\n`);
+    res.write(`data: ${data}\n\n`);
   }
-  my.on('trigger', res.callback)
+  WMainnetEvent.on(WMainnetEvent.OnBlock, res.callback)
   req.on('close', () => {
-    my.removeListener('trigger', res.callback)
-    // clearInterval(intervalId);
+    WMainnetEvent.removeListener(WMainnetEvent.OnBlock, res.callback)
+    console.log('closed');
+    
   });
 }
 
-router.all('/trigger/:data', function (req, res, next) {
-  res.send(`${req.params.data}`)
-  my.emit('trigger', req.params.data)
-})
 /* GET users listing. */
 router.all('/:id?', function (req, res, next) {
-  console.log(`client id: ${req.params['id']}`);
-
+  logger.debug('start push')
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',

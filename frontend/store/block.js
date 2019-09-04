@@ -15,7 +15,7 @@ const mutations = {
 const actions = {
   getBlockSummary({commit}){
     axios.get('/api/blocksummary').then((result)=>{
-      // console.log(JSON.stringify(data))
+      // console.log(JSON.stringify(result.data))
       commit('updateLatestBlocks',result.data)
     })
   }

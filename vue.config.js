@@ -1,4 +1,5 @@
 const path = require('path')
+const CopyWebpackPlugin =require('copy-webpack-plugin')
 const HtmlWebpackPlugin =require('html-webpack-plugin')
 
 
@@ -16,11 +17,21 @@ module.exports = {
     },
     configureWebpack:{
         plugins:[
-            new HtmlWebpackPlugin(
+            new CopyWebpackPlugin(
+                [
+                  {
+                    from: path.join(__dirname, "./frontend/public"),
+                    to: '.',
+                    toType: 'dir',
+                    ignore: [
+                      '.DS_Store'
+                    ]
+                  }
+                ]
+              ),
+              new HtmlWebpackPlugin(
                 {
-                  templateParameters: function () { /* omitted long function */ },
-                  template: './frontend/public/index.html',
-                  favicon: './frontend/public/favicon.ico',
+                  template: "./frontend/public/index.html"
                 }
               ),
         ]

@@ -23,20 +23,20 @@ class Database {
         })
         mongoose.connection.on('connected', () => {
             ServiceStatus.Database = true
-            console.error(`Database connected`)
+            console.info(`Database connected`)
         })
         mongoose.connection.on('disconnected', () => {
             ServiceStatus.Database = false
-            console.error(`Database disconnected`)
+            console.info(`Database disconnected`)
         })
         mongoose.connection.on('reconnected', () => {
             ServiceStatus.Database = true
-            console.error(`Database connected`)
+            console.info(`Database connected`)
         })
         mongoose.connect(`${server}/${collection}`,dbconfig.options)
             .then(() => {
                 ServiceStatus.Database = true
-                console.log('mongodb connected')
+                console.info('mongodb connected')
             })
             .catch(error => {
                 ServiceStatus.Database = false

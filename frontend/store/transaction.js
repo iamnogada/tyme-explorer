@@ -15,7 +15,7 @@ const mutations = {
 const actions = {
   getTransactionSummary({commit}){
     axios.get('/api/transactionsummary').then((result)=>{
-      // console.log(JSON.stringify(data))
+      console.log(JSON.stringify(result))
       commit('updateLatestTransactions',result.data)
     })
   }

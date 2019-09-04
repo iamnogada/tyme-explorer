@@ -9,7 +9,7 @@
             <p>
               <small>Latest Block</small>&nbsp;
               <br />
-              <strong>#394100932</strong>
+              <strong>#{{latestblockNo}}</strong>
             </p>
           </div>
         </article>
@@ -17,6 +17,11 @@
 
 <script>
 export default {
+  computed:{
+    latestblockNo(){
+      return this.$store.state.monitor.lastestBlock
+    }
+  }
 };
 </script>
 

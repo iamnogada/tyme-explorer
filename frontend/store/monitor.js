@@ -1,4 +1,5 @@
 const state = {
+  lastestBlock:0
 }
 
 const getters = {
@@ -8,19 +9,15 @@ const mutations = {
   
 }
 const actions = {
-  startMonitor({dispatch}){
-    dispatch('sam/Test',"hello",{root:true})
-
+  startMonitor({dispatch,state}){
+    
     if (!!window.EventSource) {
       const sseSource = new EventSource('/monitor')
-      sseSource.addEventListener('message',(e)=>{
-        const messageData = e.data;
-        console.log("rx:"+messageData);
-        
-      })
-      sseSource.addEventListener('userlogon', function(e) {
-        // var data = JSON.parse(e.data);
-        console.log('User login:' + e.data);
+      sseSource.addEventListener('mainnet', function(e) {
+        state.lastestBlock = e.data
+        dispatch('block/getBlockSummary','',{root:true})
+        dispatch('transaction/getTransactionSummary','',{root:true})
+        // console.log('Mainnet:' + state.lastestBlock);
       }, false);
       
     }else{

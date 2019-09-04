@@ -5,6 +5,7 @@ const path = require('path')
 require('dotenv').config({'path':path.join(__dirname,'config/.env')})
 const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
+const WMainnetEvent = require('./service/WMainnetEvent')
 const logger =require('./util/logger')
 
 const defaultRouter = require('./routes/default')
@@ -17,7 +18,7 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-console.log("========:"+path.join(__dirname, 'dist'));
+
 app.use(express.static(path.join(__dirname, 'dist')))
 
 // app.use('/', defaultRouter)
@@ -32,6 +33,7 @@ app.use('/monitor', monitorRouter)
 const port = normalizePort(process.env.PORT || '3000')
 app.set('port', port)
 
+WMainnetEvent.start()
 /**
  * Create HTTP server.
  */
